@@ -1,0 +1,48 @@
+.registro-container {
+  display: flex;
+  justify-content: center;
+}
+
+.registro-card {
+  background-color: #0c1321;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #13213A;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.input-group span {
+  margin-right: 8px;
+  color: #dce2f6;
+}
+
+.input-group input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #dce2f6;
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #0F3D7A;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+p {
+  color: #fff;
+}

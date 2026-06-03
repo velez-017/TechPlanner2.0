@@ -1,0 +1,90 @@
+<div class="page">
+  <a class="page-back-button" href="/inicio">← Volver</a>
+
+  <div class="card">
+
+    <div class="header">
+      <h1>Registro de Componente</h1>
+      <p>Ingrese las especificaciones técnicas del hardware</p>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">Gestión de Componentes</h2>
+      <button class="btn btn-primary" (click)="addProducto()">
+        Nuevo Producto
+      </button>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <strong>Lista de Productos</strong>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of precioProductos">
+          <div class="d-flex align-items-center">
+
+            <div class="flex-grow-1">
+              <strong>{{ item.productName }}</strong> <br>
+              Tipo Cliente: {{ item.customerType }} <br>
+              Precio Base: ${{ item.basePrice }} | Descuento: {{ item.discountPercentage }}% <br>
+              <strong>Precio Final: ${{ item.finalPrice }}</strong>
+              <!--strong>{{ cliente.nombre }} {{ cliente.apellido }}</strong>
+              <br>
+              <small class="text-muted">{{ cliente.email }}</small>
+              <br>
+              <small class="text-muted">{{ cliente.region?.nombre }}</small-->
+            </div>
+
+            <div class="d-flex gap-2">
+              <!--a [routerLink]="['/clientes/detalle', cliente.id]"
+                 class="btn btn-sm btn-light">
+                Ver detalle
+              </a-->
+              <!--button class="btn btn-sm btn-warning" (click)="editProducto(prod)">
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="confirmDelete(precioProductos)">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button-->
+            </div>
+
+          </div>
+        </li>
+      </ul>
+
+      <div *ngIf="precioProductos.length === 0" class="card-body text-center text-muted">
+        No hay clientes registrados.
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <p>Total de productos cargados: {{ precioProductos.length }}</p>
+
+    <!--div *ngIf="getProductos() && precioProductos.length > 0">
+      <h2>Precios de Productos</h2>
+
+      <ul>
+        < 2. Recorremos el arreglo >
+        <li *ngFor="let item of precioProductos">
+          <strong>{{ item.productName }}</strong> <br>
+          Tipo Cliente: {{ item.customerType }} <br>
+          Precio Base: ${{ item.basePrice }} | Descuento: {{ item.discountPercentage }}% <br>
+          <strong>Precio Final: ${{ item.finalPrice }}</strong>
+          {{confirmDelete}}
+          <hr>
+        </li>
+      </ul>
+    </div-->
+
+  </div>
+
+</div>

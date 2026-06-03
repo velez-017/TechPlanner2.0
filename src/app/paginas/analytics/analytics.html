@@ -1,0 +1,231 @@
+<div class="analytics-layout">
+
+  <!-- SIDEBAR -->
+  <app-sidebar></app-sidebar>
+
+  <!-- MAIN -->
+  <main class="analytics-main">
+
+    <!-- HEADER -->
+    <div class="analytics-header">
+
+      <div>
+        <h1>Analytics & Performance</h1>
+        <p>Monitoreo de métricas, crecimiento y rendimiento</p>
+      </div>
+
+      <button class="export-btn">
+        Exportar Reporte
+      </button>
+
+    </div>
+
+    <!-- METRICS -->
+    <section class="metrics-grid">
+
+      <div
+        class="metric-card"
+        *ngFor="let metric of metrics"
+      >
+
+        <span class="metric-title">
+          {{ metric.titulo }}
+        </span>
+
+        <h2>
+          {{ metric.valor }}
+        </h2>
+
+        <p>
+          {{ metric.cambio }} este mes
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- CHARTS -->
+    <section class="charts-grid">
+
+      <!-- BAR CHART -->
+      <div class="chart-card">
+
+        <div class="card-header">
+          <h3>Revenue Growth</h3>
+        </div>
+
+        <div class="bars-container">
+
+          <div class="bar-group">
+            <div class="bar h1"></div>
+            <span>Enero</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h2"></div>
+            <span>Febrero</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h3"></div>
+            <span>Marzo</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h4"></div>
+            <span>Abril</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h5"></div>
+            <span>Mayo</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h6"></div>
+            <span>Junio</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h7"></div>
+            <span>Julio</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h8"></div>
+            <span>Agosto</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h9"></div>
+            <span>Septiembre</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h10"></div>
+            <span>Octubre</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h11"></div>
+            <span>Noviembre</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar h12"></div>
+            <span>Diciembre</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- DONUT -->
+      <div class="chart-card">
+
+        <div class="card-header">
+          <h3>Conversión Global</h3>
+        </div>
+
+        <div class="donut-wrapper">
+
+          <div class="donut-chart">
+            <div class="donut-inner">
+              94%
+            </div>
+          </div>
+
+          <p class="donut-text">
+            Conversión promedio de clientes este trimestre
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TABLE -->
+    <section class="table-card">
+
+      <div class="card-header">
+        <h3>Performance de proyectos</h3>
+      </div>
+
+      <table>
+
+        <thead>
+
+        <tr>
+          <th>Proyecto</th>
+          <th>Progreso</th>
+          <th>Estado</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let proyecto of proyectos">
+
+          <td>
+            {{ proyecto.nombre }}
+          </td>
+
+          <td>
+
+            <div class="progress-wrapper">
+
+              <div class="progress-bar">
+
+                <div
+                  class="progress-fill"
+                  [style.width.%]="proyecto.progreso"
+                ></div>
+
+              </div>
+
+              <span>
+                  {{ proyecto.progreso }}%
+                </span>
+
+            </div>
+
+          </td>
+
+          <td>
+
+              <span
+                class="status excellent"
+                *ngIf="proyecto.estado === 'Excelente'"
+              >
+                Excelente
+              </span>
+
+            <span
+              class="status stable"
+              *ngIf="proyecto.estado === 'Estable'"
+            >
+                Estable
+              </span>
+
+            <span
+              class="status risk"
+              *ngIf="proyecto.estado === 'Riesgo'"
+            >
+                Riesgo
+              </span>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+  </main>
+
+</div>

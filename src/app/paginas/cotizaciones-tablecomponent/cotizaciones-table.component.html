@@ -1,0 +1,161 @@
+<div class="page">
+
+  <div class="table-card">
+
+    <!-- HEADER -->
+    <div class="header">
+
+      <div>
+        <h1>Cotizaciones Generadas</h1>
+        <p>Gestión y seguimiento de cotizaciones comerciales</p>
+      </div>
+
+      <button class="btn-primary">
+        + Nueva Cotización
+      </button>
+
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filters">
+
+      <div class="form-group">
+        <label>Buscar ID</label>
+        <input type="text" placeholder="Ej: COT-001">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Estado</label>
+        <select>
+          <option>Todos</option>
+          <option>Completada</option>
+          <option>Borrador</option>
+          <option>Cancelada</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Cliente / Proyecto</th>
+          <th>Items</th>
+          <th>Total USD</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let cotizacion of cotizaciones">
+
+          <td class="id">
+            {{ cotizacion.id }}
+          </td>
+
+          <td>
+            {{ cotizacion.fecha }}
+          </td>
+
+          <td>
+            <div class="client">
+              {{ cotizacion.cliente }}
+            </div>
+
+            <div class="project">
+              {{ cotizacion.proyecto }}
+            </div>
+          </td>
+
+          <td>
+            {{ cotizacion.items }}
+          </td>
+
+          <td class="price">
+            {{ cotizacion.totalUsd | currency:'USD' }}
+          </td>
+
+          <td>
+
+              <span
+                class="badge completed"
+                *ngIf="cotizacion.estado === 'Completada'"
+              >
+                Completada
+              </span>
+
+            <span
+              class="badge draft"
+              *ngIf="cotizacion.estado === 'Borrador'"
+            >
+                Borrador
+              </span>
+
+            <span
+              class="badge canceled"
+              *ngIf="cotizacion.estado === 'Cancelada'"
+            >
+                Cancelada
+              </span>
+
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button class="icon-btn">
+                👁
+              </button>
+
+              <button class="icon-btn">
+                ⬇
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+
+      <span>
+        Mostrando 1 - 3 de 24 cotizaciones
+      </span>
+
+      <div class="pagination">
+
+        <button>Anterior</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Siguiente</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

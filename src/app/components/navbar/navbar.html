@@ -1,0 +1,49 @@
+<nav
+  class="navbar navbar-expand-lg navbar-dark sticky-top tp-nav py-3"
+  aria-label="Navegacion principal"
+>
+  <div class="container-fluid px-3 px-lg-4 tp-nav-shell">
+    <a class="navbar-brand brand-mark" routerLink="/" (click)="closeMenu()">
+      <img src="assets/microchip-logo.svg" alt="" aria-hidden="true" class="brand-icon" />
+      <span>TechPlanner</span>
+    </a>
+
+    <button
+      class="navbar-toggler border-0 shadow-none"
+      type="button"
+      (click)="toggleMenu()"
+      aria-controls="tpMainNav"
+      [attr.aria-expanded]="isMenuOpen()"
+      aria-label="Mostrar menu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="tpMainNav" [class.show]="isMenuOpen()">
+      <ul class="navbar-nav mb-3 mb-lg-0 gap-lg-3 text-center tp-nav-links tp-nav-links-right">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="closeMenu()">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="closeMenu()">Precios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()">Nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registro-componente" routerLinkActive="active" (click)="closeMenu()">Componentes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registro" routerLinkActive="active" (click)="closeMenu()">Registro</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a>
+        </li>
+      </ul>
+      <!-- Otros enlaces y acciones pueden ir a la derecha si es necesario -->
+    </div>
+  </div>
+</nav>

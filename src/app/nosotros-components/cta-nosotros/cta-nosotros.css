@@ -1,0 +1,33 @@
+.cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.03);
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.cta h2 {
+  margin-bottom: 10px;
+}
+
+.cta p {
+  color: #9ca3af;
+}
+
+.cta button {
+  background: #3b82f6;
+  border: none;
+  padding: 12px 20px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cta button:hover {
+  background: #2563eb;
+}
+
+h3 {
+  color: #fff;
+}

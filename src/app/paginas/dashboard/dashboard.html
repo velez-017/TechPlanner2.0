@@ -1,0 +1,179 @@
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <app-sidebar></app-sidebar>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+      <div>
+        <h1>Dashboard Enterprise</h1>
+        <p>Resumen general de operaciones y actividad</p>
+      </div>
+
+      <div class="profile">
+        JP
+      </div>
+
+    </div>
+
+    <!-- KPIs -->
+    <section class="kpi-grid">
+
+      <div class="kpi-card">
+        <span>Revenue</span>
+        <h2>$124K</h2>
+        <p>+12% este mes</p>
+      </div>
+
+      <div class="kpi-card">
+        <span>Cotizaciones</span>
+        <h2>32</h2>
+        <p>8 pendientes</p>
+      </div>
+
+      <div class="kpi-card">
+        <span>Clientes</span>
+        <h2>18</h2>
+        <p>4 nuevos</p>
+      </div>
+
+      <div class="kpi-card">
+        <span>Conversión</span>
+        <h2>94%</h2>
+        <p>Rendimiento alto</p>
+      </div>
+
+    </section>
+
+    <!-- CONTENT GRID -->
+    <section class="content-grid">
+
+      <!-- ACTIVITY -->
+      <div class="card">
+
+        <div class="card-header">
+          <h3>Actividad reciente</h3>
+        </div>
+
+        <div
+          class="activity-item"
+          *ngFor="let actividad of actividades"
+        >
+
+          <div class="activity-dot"></div>
+
+          <div>
+
+            <h4>
+              {{ actividad.titulo }}
+            </h4>
+
+            <p>
+              {{ actividad.descripcion }}
+            </p>
+
+            <span>
+              {{ actividad.fecha }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CHART -->
+      <div class="card">
+
+        <div class="card-header">
+          <h3>Grafico De Barras</h3>
+        </div>
+
+        <div class="chart-placeholder">
+
+          <div class="bar bar1"></div>
+          <div class="bar bar2"></div>
+          <div class="bar bar3"></div>
+          <div class="bar bar4"></div>
+          <div class="bar bar5"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TABLE -->
+    <section class="table-section">
+
+      <div class="card-header">
+        <h3>Últimas cotizaciones</h3>
+      </div>
+
+      <table>
+
+        <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Proyecto</th>
+          <th>Total</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let cotizacion of cotizaciones">
+
+          <td>
+            {{ cotizacion.cliente }}
+          </td>
+
+          <td>
+            {{ cotizacion.proyecto }}
+          </td>
+
+          <td class="price">
+            {{ cotizacion.total | currency:'USD' }}
+          </td>
+
+          <td>
+
+              <span
+                class="badge approved"
+                *ngIf="cotizacion.estado === 'Aprobada'"
+              >
+                Aprobada
+              </span>
+
+            <span
+              class="badge pending"
+              *ngIf="cotizacion.estado === 'Pendiente'"
+            >
+                Pendiente
+              </span>
+
+            <span
+              class="badge canceled"
+              *ngIf="cotizacion.estado === 'Cancelada'"
+            >
+                Cancelada
+              </span>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+  </main>
+
+</div>

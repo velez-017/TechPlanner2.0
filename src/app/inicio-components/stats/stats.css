@@ -1,0 +1,26 @@
+.stats {
+  border-top: 1px solid rgba(140, 232, 255, 0.15);
+  border-bottom: 1px solid rgba(140, 232, 255, 0.15);
+  background: rgba(10, 20, 37, 0.35);
+}
+
+.stat-item {
+  border-radius: 12px;
+  border: 1px solid rgba(140, 232, 255, 0.18);
+  background: rgba(18, 38, 63, 0.65);
+  padding: 1rem 0.75rem;
+}
+
+.stat-item strong {
+  display: block;
+  color: #e8f6ff;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+}
+
+.stat-item span {
+  color: #a8bfdf;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
