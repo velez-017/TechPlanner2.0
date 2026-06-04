@@ -63,7 +63,7 @@ export class RegistroComponente implements OnInit {
       title: 'Editar producto',
       html: `
         <input id="nombre"   class="swal2-input" placeholder="Nombre"   value="${precioproducto.productName}">
-        <input id="precio" class="swal2-input" placeholder="Precio producto" value="${precioproducto.basePrice}">
+        <input id="precio" class="swal2-input" placeholder="Precio producto" value="${precioproducto.amount}">
         <input id="tipo"    class="swal2-input" placeholder="Tipo producto"    value="${precioproducto.customerType}">
       `,
       showCancelButton: true,
@@ -71,7 +71,8 @@ export class RegistroComponente implements OnInit {
       cancelButtonText: 'Cancelar',
       preConfirm: () => {
         precioproducto.productName = (document.getElementById('nombre') as HTMLInputElement).value;
-        precioproducto.basePrice = Number(document.getElementById('precio') as HTMLInputElement);
+        // Obtener el valor del input y convertirlo a number
+        precioproducto.amount = Number((document.getElementById('precio') as HTMLInputElement).value);
         precioproducto.customerType = (document.getElementById('tipo') as HTMLInputElement).value;
         return precioproducto;
       },
@@ -111,7 +112,7 @@ export class RegistroComponente implements OnInit {
         const nuevoProducto = new Componente();
         nuevoProducto.productName = nombre;
         nuevoProducto.customerType = tipo;
-        nuevoProducto.basePrice = Number(precio);
+        nuevoProducto.amount = Number(precio);
         return nuevoProducto;
       },
     }).then((result) => {

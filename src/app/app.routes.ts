@@ -4,6 +4,7 @@ import { Login } from './paginas/login/login';
 import { Nosotros } from './paginas/nosotros/nosotros';
 import { Registro } from './paginas/registro/registro';
 import { RegistroComponente } from './paginas/registro-componente/registro-componente';
+import { PreciosComponent } from './precios/precios.component';
 import { Dashboard } from './paginas/dashboard/dashboard';
 import { Clientes } from './paginas/clientes/clientes';
 import { Analytics } from './paginas/analytics/analytics';
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'nosotros', component: Nosotros },
   { path: 'registro', component: Registro },
   { path: 'registro-componente', component: RegistroComponente },
+  { path: 'precios', component: PreciosComponent },
   { path: 'dashboard', component: Dashboard },
   { path: 'clientes', component: Clientes },
   { path: 'analytics', component: Analytics },

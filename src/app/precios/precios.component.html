@@ -2,89 +2,115 @@
   <a class="page-back-button" href="/inicio">← Volver</a>
 
   <div class="card">
-
     <div class="header">
-      <h1>Registro de Componente</h1>
-      <p>Ingrese las especificaciones técnicas del hardware</p>
+      <h1>Gestión de Precios</h1>
+      <p>Administre productos y cálculo de precios por tipo de cliente</p>
     </div>
+
+    <!-- Panel de acciones -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="mb-0">Gestión de Componentes</h2>
+      <h2 class="mb-0">Productos</h2>
       <button class="btn btn-primary" (click)="addProducto()">
-        Nuevo Producto
+        + Nuevo Producto
       </button>
     </div>
 
-    <div class="card shadow-sm">
-      <div class="card-header bg-primary text-white">
-        <strong>Lista de Productos</strong>
-      </div>
+    <!-- Panel de detalle cuando se selecciona un producto -->
+    <div *ngIf="selectedProduct" class="card mb-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Detalle del Producto</h5>
 
-      <ul class="list-group list-group-flush">
-        <li *ngFor="let item of precioProductos">
-          <div class="d-flex align-items-center">
-
-            <div class="flex-grow-1">
-              <strong>{{ item.productName }}</strong> <br>
-              Tipo Cliente: {{ item.customerType }} <br>
-              Precio Base: ${{ item.basePrice }} | Descuento: {{ item.discountPercentage }}% <br>
-              <strong>Precio Final: ${{ item.finalPrice }}</strong>
-              <!--strong>{{ cliente.nombre }} {{ cliente.apellido }}</strong>
-              <br>
-              <small class="text-muted">{{ cliente.email }}</small>
-              <br>
-              <small class="text-muted">{{ cliente.region?.nombre }}</small-->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre del producto:</label>
+              <p class="form-control-plaintext">{{ selectedProduct.productName }}</p>
             </div>
 
-            <div class="d-flex gap-2">
-              <!--a [routerLink]="['/clientes/detalle', cliente.id]"
-                 class="btn btn-sm btn-light">
-                Ver detalle
-              </a-->
-              <!--button class="btn btn-sm btn-warning" (click)="editProducto(prod)">
-                <fa-icon [icon]="faEdit"></fa-icon>
-              </button>
-              <button class="btn btn-sm btn-danger" (click)="confirmDelete(precioProductos)">
-                <fa-icon [icon]="faTrash"></fa-icon>
-              </button-->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Precio base:</label>
+              <p class="form-control-plaintext">${{ selectedProduct.amount }}</p>
             </div>
-
           </div>
-        </li>
-      </ul>
 
-      <div *ngIf="precioProductos.length === 0" class="card-body text-center text-muted">
-        No hay clientes registrados.
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="customerTypeSelect" class="form-label fw-bold">Tipo de cliente:</label>
+              <select id="customerTypeSelect" class="form-select" [value]="selectedProduct.customerType" (change)="selectCustomerType($event)">
+                <option value="DEFAULT">Cliente Regular (5% descuento)</option>
+                <option value="EXECUTIVE">Ejecutivo (15% descuento)</option>
+                <option value="ADMINISTRATIVE">Administrativo (10% descuento)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cálculos y resultado -->
+        <div class="row border-top pt-3 mt-3">
+          <div class="col-md-6">
+            <div class="mb-2">
+              <label class="form-label fw-bold">Descuento:</label>
+              <p class="form-control-plaintext">{{ selectedProduct.discountPercentage || 0 }}%</p>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label fw-bold">Impuesto (IVA):</label>
+              <p class="form-control-plaintext">{{ selectedProduct.taxPercentage || 0 }}%</p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="alert alert-success mb-0">
+              <label class="form-label fw-bold">PRECIO FINAL:</label>
+              <p class="fs-5 mb-0">${{ selectedProduct.finalPrice || selectedProduct.amount }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-warning btn-sm" (click)="editProducto(selectedProduct)">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="confirmDelete(selectedProduct.id)">
+            Eliminar
+          </button>
+          <button class="btn btn-secondary btn-sm" (click)="selectedProduct = undefined">
+            Cerrar
+          </button>
+        </div>
       </div>
     </div>
 
+    <!-- Lista de productos -->
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <strong>Lista de Productos ({{ precioProductos.length }})</strong>
+      </div>
 
+      <div *ngIf="precioProductos.length === 0" class="card-body text-center text-muted">
+        No hay productos registrados.
+      </div>
 
-
-
-
-
-
-
-
-
-    <p>Total de productos cargados: {{ precioProductos.length }}</p>
-
-    <!--div *ngIf="getProductos() && precioProductos.length > 0">
-      <h2>Precios de Productos</h2>
-
-      <ul>
-        < 2. Recorremos el arreglo >
-        <li *ngFor="let item of precioProductos">
-          <strong>{{ item.productName }}</strong> <br>
-          Tipo Cliente: {{ item.customerType }} <br>
-          Precio Base: ${{ item.basePrice }} | Descuento: {{ item.discountPercentage }}% <br>
-          <strong>Precio Final: ${{ item.finalPrice }}</strong>
-          {{confirmDelete}}
-          <hr>
+      <ul *ngIf="precioProductos.length > 0" class="list-group list-group-flush">
+        <li *ngFor="let item of precioProductos" class="list-group-item" (click)="selectProduct(item)" style="cursor: pointer;" [class.active]="selectedProduct?.id === item.id">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between">
+                <strong>{{ item.productName }}</strong>
+                <span class="badge bg-info">{{ getCustomerTypeLabel(item.customerType) }}</span>
+              </div>
+              <small class="text-muted">
+                Precio base: ${{ item.amount }} | Descuento: {{ item.discountPercentage || 0 }}% | IVA: {{ item.taxPercentage || 0 }}%
+              </small>
+              <br>
+              <strong class="text-success">Precio final: ${{ item.finalPrice || item.amount }}</strong>
+              <br>
+              <small class="text-muted" *ngIf="item.createdAt">Creado: {{ item.createdAt | date:'short' }}</small>
+            </div>
+          </div>
         </li>
       </ul>
-    </div-->
-
+    </div>
   </div>
-
 </div>
