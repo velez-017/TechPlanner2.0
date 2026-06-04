@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
-import { ProductoService } from './precio.service';
-import { PrecioProducto } from './precio-producto';
+import { ProductoService } from './registro.service';
+import { Componente } from './componente';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
 })
 export class RegistroComponente implements OnInit {
-  public precioProductos: PrecioProducto[] = [];
+  public precioProductos: Componente[] = [];
   // Íconos Font Awesome
   // faEdit = faEdit;
   // faTrash = faTrash;
@@ -22,7 +22,7 @@ export class RegistroComponente implements OnInit {
     this.cargarProductos();
   }
 
-  getProductos(): PrecioProducto[] {
+  getProductos(): Componente[] {
     return this.precioProductos;
   }
 
@@ -58,7 +58,7 @@ export class RegistroComponente implements OnInit {
     });
   }
 
-  editProducto(precioproducto: PrecioProducto): void {
+  editProducto(precioproducto: Componente): void {
     Swal.fire({
       title: 'Editar producto',
       html: `
@@ -108,7 +108,7 @@ export class RegistroComponente implements OnInit {
           return false;
         }
 
-        const nuevoProducto = new PrecioProducto();
+        const nuevoProducto = new Componente();
         nuevoProducto.productName = nombre;
         nuevoProducto.customerType = tipo;
         nuevoProducto.basePrice = Number(precio);
@@ -124,6 +124,6 @@ export class RegistroComponente implements OnInit {
     });
   }
 
-  protected readonly PrecioProducto = PrecioProducto;
+  protected readonly PrecioProducto = Componente;
 }
 

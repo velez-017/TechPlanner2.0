@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PrecioProducto } from '../paginas/registro-componente/precio-producto';
+import { PrecioProducto } from './precio-producto';
 
 @Injectable({
   providedIn: 'root',
@@ -37,11 +37,11 @@ export class ProductoService {
   deleteProducto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-/*
-  // ── Obtener lista de regiones ─────────────────────────────────────────────
-  getRegiones(): Observable<Region[]> {
-    return this.http.get<Region[]>(`${this.apiUrl}/regiones`);
-  }
+  /*
+    // ── Obtener lista de regiones ─────────────────────────────────────────────
+    getRegiones(): Observable<Region[]> {
+      return this.http.get<Region[]>(`${this.apiUrl}/regiones`);
+    }
 
-*/
+  */
 }

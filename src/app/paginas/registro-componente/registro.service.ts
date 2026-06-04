@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PrecioProducto } from './precio-producto';
+import { Componente } from './componente';
 
 @Injectable({
   providedIn: 'root',
@@ -12,25 +12,25 @@ export class ProductoService {
   constructor(private http: HttpClient) {}
 
   // ── Obtener todos los productos ────────────────────────────────────────────
-  getProductos(): Observable<PrecioProducto[]> {
-    return this.http.get<PrecioProducto[]>(this.apiUrl);
+  getProductos(): Observable<Componente[]> {
+    return this.http.get<Componente[]>(this.apiUrl);
   }
 
   // ── Obtener un producto por ID ─────────────────────────────────────────────
-  getProducto(id: number): Observable<PrecioProducto> {
-    return this.http.get<PrecioProducto>(`${this.apiUrl}/${id}`);
+  getProducto(id: number): Observable<Componente> {
+    return this.http.get<Componente>(`${this.apiUrl}/${id}`);
   }
 
   // ── Crear un nuevo producto ────────────────────────────────────────────────
-  createProducto(producto: PrecioProducto): Observable<PrecioProducto> {
+  createProducto(producto: Componente): Observable<Componente> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<PrecioProducto>(this.apiUrl, producto, { headers });
+    return this.http.post<Componente>(this.apiUrl, producto, { headers });
   }
 
   // ── Actualizar un producto existente ───────────────────────────────────────
-  updateProducto(producto: PrecioProducto): Observable<PrecioProducto> {
+  updateProducto(producto: Componente): Observable<Componente> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<PrecioProducto>(`${this.apiUrl}/${producto.id}`, producto, { headers });
+    return this.http.put<Componente>(`${this.apiUrl}/${producto.id}`, producto, { headers });
   }
 
   // ── Eliminar un producto ───────────────────────────────────────────────────
