@@ -2,7 +2,7 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: pricing_service_db
+    container_name: Techplanner_db
 
     environment:
       POSTGRES_DB: techplanner_pricing
@@ -21,6 +21,24 @@ services:
       timeout: 5s
       retries: 10
 
+  component-service:
+    image: juanfer28/component-service-app:latest
+
+    ports:
+      - "8083:8082"
+
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JPA_DDL: ${JPA_DDL}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+
+
   app:
     image: velez017/pricing-service-app:latest
 
@@ -37,6 +55,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
 
 volumes:
   pgdata:

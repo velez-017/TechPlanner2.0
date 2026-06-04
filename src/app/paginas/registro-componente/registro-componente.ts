@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
 })
 export class RegistroComponente implements OnInit {
-  public precioProductos: Componente[] = [];
+  public registroComponente: Componente[] = [];
   // Íconos Font Awesome
   // faEdit = faEdit;
   // faTrash = faTrash;
