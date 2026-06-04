@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PrecioProducto } from './precio-producto';
+import { PrecioProducto } from '../paginas/registro-componente/precio-producto';
 
 @Injectable({
   providedIn: 'root',

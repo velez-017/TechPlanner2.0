@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   standalone: true,
   imports: [RouterOutlet],
-  styleUrl: './app.css',
+  styleUrls: ['./app.css'],
 })
 export class App {
   protected readonly title = 'client-app-frontend';

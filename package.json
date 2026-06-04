@@ -27,6 +27,8 @@
     "@angular/build": "^18.2.0",
     "@angular/cli": "^18.2.0",
     "@angular/compiler-cli": "^18.2.0",
+    "@types/jasmine": "^6.0.0",
+    "@types/node": "^25.9.1",
     "prettier": "^3.8.1",
     "typescript": "~5.4.2"
   }

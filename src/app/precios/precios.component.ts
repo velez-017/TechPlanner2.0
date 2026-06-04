@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrecioProducto } from '../paginas/registro-componente/precio-producto';
+import { ProductoService } from './precio.service';
 
 @Component({
   selector: 'app-precios',
   templateUrl: './precios.component.html',
-  styleUrl: './precios.component.css',
+  styleUrls: ['./precios.component.css'],
   imports: [CommonModule],
   standalone: true,
 })
 export class PreciosComponent implements OnInit {
-  ngOnInit(): void {
-    this.precios=this.cargarPrecios();
-  }
-
   public precios!: PrecioProducto[];
 
-  private cargarPrecios() {
-    return servicioPrecios.getPrecios();
+  constructor(private productoService: ProductoService) {}
+
+  ngOnInit(): void {
+    this.productoService.getProductos().subscribe((p) => (this.precios = p));
   }
 }
