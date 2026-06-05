@@ -1,27 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Componente } from './componente';
 
-@Injectable({ providedIn: 'root' })
-export class ProductoService {
-  // Minimal stub implementations so TypeScript compilation succeeds.
-  getProductos(): Observable<Componente[]> {
-    return of([]);
-  }
+@Injectable({
+  providedIn: 'root',
+})
+export class RegistroService {
 
-  getProducto(id: number): Observable<Componente> {
-    return of(new Componente());
-  }
+  private readonly apiUrl = 'http://localhost:8083/api/v1/component-service/components';
 
-  createProducto(producto: Componente): Observable<Componente> {
-    return of(producto);
-  }
+  constructor(private http: HttpClient) {}
 
-  updateProducto(producto: Componente): Observable<Componente> {
-    return of(producto);
-  }
-
-  deleteProducto(id: number): Observable<void> {
-    return of(undefined as any);
+  getComponentes(): Observable<Componente[]> {
+    return this.http.get<Componente[]>(this.apiUrl);
   }
 }

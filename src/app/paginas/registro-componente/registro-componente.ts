@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { ProductoService } from './registro.service';
+import { RegistroService } from './registro.service';
 import { Componente } from './componente';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -12,121 +12,29 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
 })
 export class RegistroComponente implements OnInit {
-  public precioProductos: Componente[] = [];
-  // Íconos Font Awesome
-  // faEdit = faEdit;
-  // faTrash = faTrash;
-  // faUserPlus = faUserPlus;
 
-  constructor(private productoService: ProductoService) {
-    this.cargarProductos();
-  }
+  public componentes: Componente[] = [];
 
-  getProductos(): Componente[] {
-    return this.precioProductos;
-  }
+  constructor(private registroService: RegistroService) {}
 
   ngOnInit(): void {
-    this.cargarProductos();
+    this.cargarComponentes();
   }
 
-  cargarProductos(): void {
-    this.productoService.getProductos().subscribe((productos) => {
-      this.precioProductos = productos;
-      console.log('Datos:' + JSON.stringify(this.precioProductos));
-      //this.productos = this.precioProductos.
-    });
-  }
+  cargarComponentes(): void {
+    this.registroService.getComponentes().subscribe({
+      next: (productos) => {
+        this.componentes = productos;
+      },
+      error: (err) => {
+        console.error(err);
 
-  confirmDelete(id: number): void {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.productoService.deleteProducto(id).subscribe(() => {
-          this.cargarProductos();
-          Swal.fire('Eliminado', 'El cliente fue eliminado.', 'success');
-        });
-      }
-    });
-  }
-
-  editProducto(precioproducto: Componente): void {
-    Swal.fire({
-      title: 'Editar producto',
-      html: `
-        <input id="nombre"   class="swal2-input" placeholder="Nombre"   value="${precioproducto.productName}">
-        <input id="precio" class="swal2-input" placeholder="Precio producto" value="${precioproducto.amount}">
-        <input id="tipo"    class="swal2-input" placeholder="Tipo producto"    value="${precioproducto.customerType}">
-      `,
-      showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      preConfirm: () => {
-        precioproducto.productName = (document.getElementById('nombre') as HTMLInputElement).value;
-        // Obtener el valor del input y convertirlo a number
-        precioproducto.amount = Number(
-          (document.getElementById('precio') as HTMLInputElement).value,
+        Swal.fire(
+          'Error',
+          'No fue posible cargar los componentes',
+          'error'
         );
-        precioproducto.customerType = (document.getElementById('tipo') as HTMLInputElement).value;
-        return precioproducto;
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.productoService.updateProducto(result.value!).subscribe(() => {
-          this.cargarProductos();
-          Swal.fire('Actualizado', 'El cliente fue actualizado.', 'success');
-        });
       }
     });
   }
-
-  addProducto(): void {
-    Swal.fire({
-      title: 'Nuevo cliente',
-      html: `
-          <input id="nombre"   class="swal2-input" placeholder="Nombre">
-          <input id="precio" class="swal2-input" placeholder="Precio prod">
-          <input id="tipo"    class="swal2-input" placeholder="Tipo prod">
-        `,
-      showCancelButton: true,
-      confirmButtonText: 'Crear',
-      cancelButtonText: 'Cancelar',
-      preConfirm: () => {
-        const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
-        const precio = (document.getElementById('precio') as HTMLInputElement).value;
-        const tipo = (document.getElementById('tipo') as HTMLInputElement).value;
-        console.log(nombre);
-        console.log(precio);
-        console.log(tipo);
-        if (!nombre || !tipo) {
-          Swal.showValidationMessage('Todos los campos son obligatorios');
-          return false;
-        }
-
-        const nuevoProducto = new Componente();
-        nuevoProducto.productName = nombre;
-        nuevoProducto.customerType = tipo;
-        nuevoProducto.amount = Number(precio);
-        return nuevoProducto;
-      },
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        this.productoService.createProducto(result.value).subscribe(() => {
-          this.cargarProductos();
-          Swal.fire('Creado', 'El producto fue creado exitosamente.', 'success');
-        });
-      }
-    });
-  }
-
-  protected readonly PrecioProducto = Componente;
 }
-
