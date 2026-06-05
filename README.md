@@ -1,59 +1,81 @@
-# TechPlanner2
+# TechPlanner2.0
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Aplicación frontend construida con Angular para interactuar con el servicio de componentes y persistir datos en PostgreSQL a través de la arquitectura documentada en este repositorio.
 
-## Development server
+## Arquitectura y Flujo CI/CD
 
-To start a local development server, run:
+### Arquitectura General
 
-```bash
-ng serve
+```mermaid
+flowchart LR
+	A[Frontend Angular] -->|GET /api/v1/component-service/components| B[Component Service]
+	B --> C[PostgreSQL]
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Este diagrama resume la relación principal de la solución: el frontend Angular consume el endpoint de lectura expuesto por el servicio de componentes y el backend persiste o consulta datos en PostgreSQL.
 
-## Code scaffolding
+### Flujo de Ejecución
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```mermaid
+flowchart LR
+	U[Usuario] --> A[Angular]
+	A --> R[RegistroService]
+	R --> C[ComponentRestController]
+	C --> S[IComponentService]
+	S --> P[Repository]
+	P --> D[PostgreSQL]
+	D --> J[Respuesta JSON]
+	J --> A
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Este flujo describe la ruta completa de una solicitud desde la interacción del usuario hasta la respuesta del backend, incluyendo el acceso a la base de datos y el retorno de la respuesta en formato JSON al frontend.
 
-```bash
-ng generate --help
+### Flujo GitHub Actions
+
+```mermaid
+flowchart LR
+	D[Developer Push] --> G[GitHub Repository]
+	G --> A[GitHub Actions]
+	A --> M[Maven Test]
+	M --> J[JaCoCo]
+	J --> B[Docker Build]
+	B --> P[Docker Push]
+	P --> H[GHCR]
 ```
 
-## Building
+Este flujo documenta el ciclo de integración y entrega continua: el código se valida con pruebas Maven, se mide cobertura con JaCoCo y, si todo es correcto, se construye y publica la imagen Docker en GHCR.
 
-To build the project run:
+### Flujo Docker Compose
 
-```bash
-ng build
+```mermaid
+flowchart LR
+	C[Docker Compose] --> P[PostgreSQL\n5433 → 5432]
+	C --> S[Component Service\n8083 → 8082]
+	C --> F[Frontend\n8081]
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Este diagrama representa el levantamiento conjunto de los servicios locales. Docker Compose expone PostgreSQL, el servicio de componentes y el frontend con los mapeos de puerto utilizados por la solución.
 
-## Running unit tests
+## Ejecución local
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Para iniciar el frontend en desarrollo:
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Para compilar la aplicación:
 
-## Additional Resources
+```bash
+npm run build
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Para ejecutar las pruebas unitarias:
+
+```bash
+npm test
+```
+
+## Notas
+
+La documentación anterior se limita a los flujos y puertos observables en el repositorio y en la configuración de contenedores incluida en este proyecto.
