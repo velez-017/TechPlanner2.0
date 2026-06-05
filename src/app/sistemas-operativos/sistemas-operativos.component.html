@@ -1,0 +1,118 @@
+<div class="page">
+  <a class="page-back-button" href="/inicio">← Volver</a>
+
+  <div class="card">
+    <div class="header">
+      <h1>Gestión de Sistemas Operativos</h1>
+      <p>Interfaz cliente alineada con OS Service (Spring Boot)</p>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">Sistemas Operativos</h2>
+      <div>
+        <button class="btn btn-secondary me-2" (click)="verificarCompatibilidad()">Verificar compatibilidad</button>
+        <button class="btn btn-primary" (click)="addSistema()">+ Nuevo Sistema</button>
+      </div>
+    </div>
+
+    <div class="card mb-4 filters-card">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label fw-bold">Buscar por ID</label>
+            <input class="form-control" type="number" min="1" [(ngModel)]="searchId" placeholder="Ej: 1" />
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-outline-info w-100" (click)="buscarPorId()">Buscar</button>
+          </div>
+
+          <div class="col-md-2">
+            <button class="btn btn-outline-light w-100" (click)="cargarTodos()">Todos</button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-outline-success w-100" (click)="cargarActivos()">Activos</button>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label fw-bold">Arquitectura</label>
+            <div class="input-group">
+              <select class="form-select" [(ngModel)]="architectureFilter">
+                <option *ngFor="let arch of ARCHS" [ngValue]="arch.code">{{ arch.label }}</option>
+              </select>
+              <button class="btn btn-outline-warning" (click)="cargarPorArquitectura(architectureFilter)">Filtrar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-end mt-2">
+          <div class="col-md-2">
+            <button class="btn btn-outline-secondary w-100" (click)="cargarPaginado(0)">Paginado</button>
+          </div>
+          <div class="col-md-10 text-muted small d-flex align-items-center">
+            <span *ngIf="currentView === 'paged'">Página {{ currentPage + 1 }} / {{ totalPages || 1 }} · Registros: {{ totalElements }}</span>
+            <span *ngIf="currentView !== 'paged'">Registros: {{ totalElements }}</span>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3" *ngIf="currentView === 'paged' && totalPages > 1">
+          <button class="btn btn-sm btn-outline-light" [disabled]="currentPage <= 0" (click)="cargarPaginado(currentPage - 1)">Anterior</button>
+          <button class="btn btn-sm btn-outline-light" [disabled]="currentPage >= totalPages - 1" (click)="cargarPaginado(currentPage + 1)">Siguiente</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selected" class="card mb-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Detalle</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Nombre</label>
+            <p class="form-control-plaintext">{{ selected.name }}</p>
+            <label class="form-label fw-bold">Versión</label>
+            <p class="form-control-plaintext">{{ selected.version }}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Arquitectura</label>
+            <p class="form-control-plaintext">{{ selected.architecture }}</p>
+            <label class="form-label fw-bold">RAM mínima</label>
+            <p class="form-control-plaintext">{{ selected.minRamGb }} GB</p>
+            <label class="form-label fw-bold">Storage mínimo</label>
+            <p class="form-control-plaintext">{{ selected.minStorageGb }} GB</p>
+            <label class="form-label fw-bold">Precio estimado</label>
+            <p class="form-control-plaintext">${{ selected.estimatedPrice }}</p>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-warning btn-sm" (click)="editSistema(selected)">Editar</button>
+          <button class="btn btn-danger btn-sm" (click)="confirmDelete(selected.id)">Eliminar</button>
+          <button class="btn btn-secondary btn-sm" (click)="selected = undefined">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <strong>Lista de Sistemas ({{ sistemas.length }})</strong>
+      </div>
+
+      <div *ngIf="sistemas.length === 0" class="card-body text-center text-muted">No hay sistemas registrados.</div>
+
+      <ul *ngIf="sistemas.length > 0" class="list-group list-group-flush">
+        <li *ngFor="let s of sistemas" class="list-group-item" (click)="select(s)" style="cursor:pointer" [class.active]="selected?.id === s.id">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <strong>{{ s.name }}</strong>
+              <div class="text-muted">{{ s.version }} • {{ s.architecture }}</div>
+            </div>
+            <div style="text-align:right">
+              <small class="text-muted">RAM: {{ s.minRamGb }}GB</small><br>
+              <small class="text-muted">Storage: {{ s.minStorageGb }}GB</small><br>
+              <small class="text-muted">Activo: {{ s.active ? 'Sí' : 'No' }}</small>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

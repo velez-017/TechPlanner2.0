@@ -56,6 +56,44 @@ services:
       postgres:
         condition: service_healthy
 
+  os-postgres:
+    image: postgres:16-alpine
+    container_name: Techplanner_os_db
+
+    environment:
+      POSTGRES_DB: osdb
+      POSTGRES_USER: ${OS_DB_USERNAME}
+      POSTGRES_PASSWORD: ${OS_DB_PASSWORD}
+
+    ports:
+      - "5434:5435"
+
+    volumes:
+      - os_pgdata:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${OS_DB_USERNAME:-devdb} -d osdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  os-app:
+    image: juanfgordillo/os-service-app:latest
+
+    ports:
+      - "8084:8085"
+      - "8087:8086"
+
+    environment:
+      DB_URL: ${OS_DB_URL}
+      DB_USERNAME: ${OS_DB_USERNAME}
+      DB_PASSWORD: ${OS_DB_PASSWORD}
+      JPA_DDL: ${JPA_DDL}
+
+    depends_on:
+      os-postgres:
+        condition: service_healthy
 
 volumes:
   pgdata:
+  os_pgdata:
