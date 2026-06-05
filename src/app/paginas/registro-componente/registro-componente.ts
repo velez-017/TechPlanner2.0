@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
 })
 export class RegistroComponente implements OnInit {
-  public registroComponente: Componente[] = [];
+  public precioProductos: Componente[] = [];
   // Íconos Font Awesome
   // faEdit = faEdit;
   // faTrash = faTrash;
@@ -33,7 +33,7 @@ export class RegistroComponente implements OnInit {
   cargarProductos(): void {
     this.productoService.getProductos().subscribe((productos) => {
       this.precioProductos = productos;
-      console.log("Datos:"+JSON.stringify(this.precioProductos));
+      console.log('Datos:' + JSON.stringify(this.precioProductos));
       //this.productos = this.precioProductos.
     });
   }
@@ -72,7 +72,9 @@ export class RegistroComponente implements OnInit {
       preConfirm: () => {
         precioproducto.productName = (document.getElementById('nombre') as HTMLInputElement).value;
         // Obtener el valor del input y convertirlo a number
-        precioproducto.amount = Number((document.getElementById('precio') as HTMLInputElement).value);
+        precioproducto.amount = Number(
+          (document.getElementById('precio') as HTMLInputElement).value,
+        );
         precioproducto.customerType = (document.getElementById('tipo') as HTMLInputElement).value;
         return precioproducto;
       },
