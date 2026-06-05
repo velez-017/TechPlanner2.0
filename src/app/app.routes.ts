@@ -8,6 +8,7 @@ import { PreciosComponent } from './precios/precios.component';
 import { Dashboard } from './paginas/dashboard/dashboard';
 import { Clientes } from './paginas/clientes/clientes';
 import { Analytics } from './paginas/analytics/analytics';
+import { SistemasOperativosComponent } from './paginas/sistemas-operativos/sistemas-operativos.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard },
   { path: 'clientes', component: Clientes },
   { path: 'analytics', component: Analytics },
+  { path: 'sistemas-operativos', component: SistemasOperativosComponent},
   {
     path: 'clientes',
     loadChildren: () => import('./clientes/clientes.routes').then(m => m.CLIENTES_ROUTES)
