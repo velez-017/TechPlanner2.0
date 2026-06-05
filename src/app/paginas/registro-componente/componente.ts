@@ -1,10 +1,9 @@
 export class Componente {
   id?: number;
   productName: string = '';
-  basePrice!: number;
+  amount: number = 0;
   customerType: string = '';
-  discountPercentage!: number;
-  taxPercentage!: number;
-  finalPrice!: number;
+  discountPercentage: number = 0;
+  finalPrice: number = 0;
   createdAt?: Date;
 }
