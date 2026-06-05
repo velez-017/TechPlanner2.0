@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
  * Responsabilidades:
  * - Mostrar interfaz para crear/editar/eliminar productos
  * - Enviar datos al backend (campo "amount" en lugar de "basePrice")
- * - Tipos de cliente: DEFAULT, EXECUTIVE, ADMINISTRATIVE (del backend)
+ * - Tipos de cliente: REGULAR, EXECUTIVE, ADMINISTRATIVE (del backend)
  * - Mostrar preview de cálculos (que el backend confirmará)
  */
 @Component({
@@ -28,7 +28,7 @@ export class PreciosComponent implements OnInit {
 
   // Tipos de cliente disponibles (del backend)
   public readonly CUSTOMER_TYPES = [
-    { code: 'DEFAULT', label: 'Cliente Regular', discount: 5 },
+    { code: 'REGULAR', label: 'Cliente Regular', discount: 5 },
     { code: 'EXECUTIVE', label: 'Ejecutivo', discount: 15 },
     { code: 'ADMINISTRATIVE', label: 'Administrativo', discount: 10 },
   ];
@@ -80,7 +80,7 @@ export class PreciosComponent implements OnInit {
         <input id="amount" class="swal2-input" type="number" placeholder="Precio base (ej: 1000)" step="0.01" min="0.01">
         <select id="customerType" class="swal2-input">
           <option value="">Selecciona tipo de cliente</option>
-          <option value="DEFAULT">Cliente Regular (5% descuento)</option>
+          <option value="REGULAR">Cliente Regular (5% descuento)</option>
           <option value="EXECUTIVE">Ejecutivo (15% descuento)</option>
           <option value="ADMINISTRATIVE">Administrativo (10% descuento)</option>
         </select>
@@ -129,7 +129,7 @@ export class PreciosComponent implements OnInit {
         <input id="productName" class="swal2-input" placeholder="Nombre" value="${precioproducto.productName}">
         <input id="amount" class="swal2-input" type="number" placeholder="Precio base" value="${precioproducto.amount}" step="0.01" min="0.01">
         <select id="customerType" class="swal2-input">
-          <option value="DEFAULT" ${precioproducto.customerType === 'DEFAULT' ? 'selected' : ''}>Cliente Regular (5%)</option>
+          <option value="REGULAR" ${precioproducto.customerType === 'REGULAR' ? 'selected' : ''}>Cliente Regular (5%)</option>
           <option value="EXECUTIVE" ${precioproducto.customerType === 'EXECUTIVE' ? 'selected' : ''}>Ejecutivo (15%)</option>
           <option value="ADMINISTRATIVE" ${precioproducto.customerType === 'ADMINISTRATIVE' ? 'selected' : ''}>Administrativo (10%)</option>
         </select>

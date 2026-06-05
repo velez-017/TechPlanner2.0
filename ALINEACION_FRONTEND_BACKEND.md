@@ -20,7 +20,7 @@ Hemos sincronizado completamente el frontend Angular con el microservicio Pricin
 
 ### 2. **Tipos de Cliente: Nombres → Códigos Backend**
 - **Antes**: "Regular", "Exclusivo", "Administrativo"
-- **Ahora**: "DEFAULT", "EXECUTIVE", "ADMINISTRATIVE"
+- **Ahora**: "REGULAR", "EXECUTIVE", "ADMINISTRATIVE"
 - **Razón**: Alineación exacta con el ENUM del backend
 - **Archivos afectados**:
   - `precio.service.ts` (DISCOUNTS object) ✅
@@ -28,7 +28,7 @@ Hemos sincronizado completamente el frontend Angular con el microservicio Pricin
   - `precios.component.html` (select options) ✅
 
 ### 3. **Porcentajes de Descuento: Correctos del Backend**
-- **Regular/DEFAULT**: 5% (era 0%)
+- **Regular/REGULAR**: 5% (era 0%)
 - **Exclusivo/EXECUTIVE**: 15% (era 20%)
 - **Administrativo/ADMINISTRATIVE**: 10% (correcto)
 - **Razón**: Coinciden con la lógica `calculatePricing()` del backend
@@ -52,12 +52,12 @@ Hemos sincronizado completamente el frontend Angular con el microservicio Pricin
 
 ### Descuentos por Tipo de Cliente
 
-| Tipo | Backend | Frontend Anterior | Frontend Actual | Estado |
-|------|---------|------------------|-----------------|--------|
-| DEFAULT | 5% | Regular 0% | DEFAULT 5% | ✅ ALINEADO |
-| EXECUTIVE | 15% | Exclusivo 20% | EXECUTIVE 15% | ✅ ALINEADO |
+| Tipo           | Backend | Frontend Anterior | Frontend Actual | Estado |
+|----------------|---------|------------------|-----------------|--------|
+| REGULAR        | 5% | Regular 0% | REGULAR 5% | ✅ ALINEADO |
+| EXECUTIVE      | 15% | Exclusivo 20% | EXECUTIVE 15% | ✅ ALINEADO |
 | ADMINISTRATIVE | 10% | Administrativo 10% | ADMINISTRATIVE 10% | ✅ ALINEADO |
-| IVA | 19% (todos) | 19% reg, 0% admin | 19% (todos) | ✅ ALINEADO |
+| IVA            | 19% (todos) | 19% reg, 0% admin | 19% (todos) | ✅ ALINEADO |
 
 ---
 
@@ -66,7 +66,7 @@ Hemos sincronizado completamente el frontend Angular con el microservicio Pricin
 ### Backend (Java/Spring)
 ```java
 public enum CustomerType {
-  DEFAULT,           // 5% descuento
+  REGULAR,           // 5% descuento
   EXECUTIVE,         // 15% descuento
   ADMINISTRATIVE     // 10% descuento
 }
@@ -84,7 +84,7 @@ private void calculatePricing() {
 ```typescript
 // precio.service.ts
 DISCOUNTS = {
-  'DEFAULT': 5,
+  'REGULAR': 5,
   'EXECUTIVE': 15,
   'ADMINISTRATIVE': 10
 };
@@ -104,14 +104,14 @@ completeProductData(product) {
 
 ## 📝 EJEMPLOS CON NUEVOS VALORES
 
-### Ejemplo 1: Cliente DEFAULT
+### Ejemplo 1: Cliente REGULAR
 
 **Input:**
 ```json
 {
   "productName": "Mouse Logitech",
   "amount": 50,
-  "customerType": "DEFAULT"
+  "customerType": "REGULAR"
 }
 ```
 
@@ -129,7 +129,7 @@ FINAL:      47.50 + 9.02 = 56.52
   "id": 1,
   "productName": "Mouse Logitech",
   "amount": 50,
-  "customerType": "DEFAULT",
+  "customerType": "REGULAR",
   "discountPercentage": 5,
   "taxPercentage": 19,
   "finalPrice": 56.52,
@@ -195,7 +195,7 @@ Diferencia:          +855 MÁS (incluye IVA)
 
 | Tipo Cliente | Producto | Monto | Antes | Ahora | Cambio |
 |---|---|---|---|---|---|
-| DEFAULT | Mouse | $50 | $54.50 | $56.52 | +3.7% |
+| REGULAR | Mouse | $50 | $54.50 | $56.52 | +3.7% |
 | EXECUTIVE | Laptop | $1500 | $1428 | $1517.25 | +6.3% |
 | ADMINISTRATIVE | Servidor | $5000 | $4500 | $5355 | +19% |
 
@@ -218,11 +218,11 @@ Output location: C:\Users\jhon0\IdeaProjects\TechPlanner2\dist\client-app-fronte
 
 ## 🚀 PRUEBAS RECOMENDADAS
 
-### 1. **Crear Producto DEFAULT**
+### 1. **Crear Producto REGULAR**
 ```
 Nombre: Monitor
 Monto: 100
-Tipo: DEFAULT (5% desc)
+Tipo: REGULAR (5% desc)
 Esperado Final: 114.35
 ```
 
@@ -244,7 +244,7 @@ Esperado Final: 570.5
 
 ### 4. **Cambiar Tipo en Detalle**
 ```
-Producto existente: Laptop ($1000, DEFAULT, $1190)
+Producto existente: Laptop ($1000, REGULAR, $1190)
 Cambiar a: EXECUTIVE
 Esperado: $1011.50
 Verificar que backend recalcula
@@ -259,7 +259,7 @@ Verificar que backend recalcula
    - ✅ Documentación actualizada
 
 2. **precio.service.ts**
-   - ✅ `DISCOUNTS` alineado: DEFAULT 5%, EXECUTIVE 15%, ADMINISTRATIVE 10%
+   - ✅ `DISCOUNTS` alineado: REGULAR 5%, EXECUTIVE 15%, ADMINISTRATIVE 10%
    - ✅ `TAX_RATE = 19` (único)
    - ✅ Métodos HTTP funcionan igual
    - ✅ `completeProductData()` recalcula con valores correctos
@@ -274,7 +274,7 @@ Verificar que backend recalcula
 
 4. **precios.component.html**
    - ✅ Todas las referencias `basePrice` → `amount`
-   - ✅ Select options: DEFAULT/EXECUTIVE/ADMINISTRATIVE
+   - ✅ Select options: REGULAR/EXECUTIVE/ADMINISTRATIVE
    - ✅ Muestra etiquetas legibles via `getCustomerTypeLabel()`
 
 5. **README.md**
@@ -320,7 +320,7 @@ Verificar que backend recalcula
 ✅ **FRONTEND COMPLETAMENTE ALINEADO CON BACKEND**
 
 El microservicio Pricing Service y la interfaz Angular ahora:
-- Usan los mismos tipos de cliente (DEFAULT, EXECUTIVE, ADMINISTRATIVE)
+- Usan los mismos tipos de cliente (REGULAR, EXECUTIVE, ADMINISTRATIVE)
 - Aplican los mismos porcentajes (5%, 15%, 10%, IVA 19%)
 - Calculan precios idénticamente
 - Comunican datos consistentemente
@@ -335,7 +335,7 @@ El microservicio Pricing Service y la interfaz Angular ahora:
 ### Si algo no funciona:
 1. Verificar que backend corre en `http://localhost:8081`
 2. Verificar que PostgreSQL tiene tabla `price`
-3. Verificar que tipos cliente son `DEFAULT`, `EXECUTIVE`, `ADMINISTRATIVE`
+3. Verificar que tipos cliente son `REGULAR`, `EXECUTIVE`, `ADMINISTRATIVE`
 4. Limpiar cachés: `npm ci && npm run build`
 5. Ver console (F12) para logs y errores HTTP
 
