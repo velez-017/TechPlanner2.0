@@ -93,8 +93,7 @@ export class CotizacionesTableComponent {
   }
 
   generarCotizacionPdf(cotizacion: Cotizacion) {
-  alert('NUEVO PDF');
-  
+
   this.isGeneratingPdf.set(true);
 
   console.log('COTIZACION ENVIADA:', cotizacion);

@@ -16,12 +16,19 @@ export class QuotationService {
    * Envía la cotización completa al backend
    */
   generarPdfCotizacion(cotizacion: any): Observable<Blob> {
-    return this.http.post(
-      this.apiUrl,
-      cotizacion,
-      {
-        responseType: 'blob'
-      }
-    );
+
+  const request = {
+    usageType: 'general',
+    budget: cotizacion.totalUsd,
+    components: []
+  };
+
+  return this.http.post(
+    this.apiUrl,
+    request,
+    {
+      responseType: 'blob'
+    }
+  );
   }
 }
