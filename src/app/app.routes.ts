@@ -9,6 +9,7 @@ import { Dashboard } from './paginas/dashboard/dashboard';
 import { Clientes } from './paginas/clientes/clientes';
 import { Analytics } from './paginas/analytics/analytics';
 import { SistemasOperativosComponent } from './paginas/sistemas-operativos/sistemas-operativos.component';
+import { Cotizaciones } from './paginas/cotizaciones/cotizaciones';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'precios', component: PreciosComponent },
   { path: 'dashboard', component: Dashboard },
   { path: 'clientes', component: Clientes },
+  { path: 'cotizaciones', component: Cotizaciones },
   { path: 'analytics', component: Analytics },
   { path: 'sistemas-operativos', component: SistemasOperativosComponent},
   {

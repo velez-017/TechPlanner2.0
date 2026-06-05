@@ -1,0 +1,31 @@
+.cotizaciones-layout {
+  min-height: 100vh;
+  display: flex;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(57, 179, 255, 0.08), transparent 35%),
+    radial-gradient(circle at 82% 7%, rgba(140, 232, 255, 0.05), transparent 30%),
+    linear-gradient(
+      140deg,
+      var(--tp-bg-900) 0%,
+      var(--tp-bg-800) 55%,
+      #182f4f 100%
+    );
+  color: var(--tp-text);
+}
+
+.cotizaciones-main {
+  flex: 1;
+  padding: 32px;
+}
+
+@media (max-width: 900px) {
+
+  .cotizaciones-layout {
+    flex-direction: column;
+  }
+
+  .cotizaciones-main {
+    padding: 20px;
+  }
+
+}

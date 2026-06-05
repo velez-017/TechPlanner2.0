@@ -57,5 +57,16 @@ services:
         condition: service_healthy
 
 
+  quotation-service:
+    image: techplanner-quotation-service:latest
+    container_name: quotation-service
+
+    ports:
+      - "8080:8080"
+
+    restart: always
+
+
+
 volumes:
   pgdata:

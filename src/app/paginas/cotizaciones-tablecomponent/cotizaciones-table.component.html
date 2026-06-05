@@ -10,8 +10,12 @@
         <p>Gestión y seguimiento de cotizaciones comerciales</p>
       </div>
 
-      <button class="btn-primary">
-        + Nueva Cotización
+      <button
+        class="btn-primary"
+        type="button"
+        (click)="abrirNuevaCotizacion()"
+      >
+        Generar nueva cotización
       </button>
 
     </div>
@@ -117,11 +121,21 @@
 
             <div class="actions">
 
-              <button class="icon-btn">
+              <button
+                class="icon-btn"
+                type="button"
+                title="Ver cotización"
+              >
                 👁
               </button>
 
-              <button class="icon-btn">
+              <button
+                class="icon-btn"
+                type="button"
+                title="Descargar PDF"
+                [disabled]="isGeneratingPdf()"
+                (click)="generarCotizacionPdf()"
+              >
                 ⬇
               </button>
 
@@ -159,3 +173,159 @@
   </div>
 
 </div>
+
+<app-modal
+  [isOpen]="isQuotationModalOpen"
+  title="Nueva cotización"
+  (close)="cerrarNuevaCotizacion()"
+>
+  <div class="quotation-builder">
+
+    <form class="quotation-form">
+
+      <div class="form-row">
+        <label>
+          Fecha
+          <input type="date" name="fecha" [(ngModel)]="nuevaCotizacion.fecha">
+        </label>
+
+        <label>
+          Estado
+          <select name="estado" [(ngModel)]="nuevaCotizacion.estado">
+            <option value="Borrador">Borrador</option>
+            <option value="Completada">Completada</option>
+            <option value="Cancelada">Cancelada</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Cliente
+        <input
+          type="text"
+          name="cliente"
+          placeholder="Ej: TechNova"
+          [(ngModel)]="nuevaCotizacion.cliente"
+        >
+      </label>
+
+      <label>
+        Proyecto
+        <input
+          type="text"
+          name="proyecto"
+          placeholder="Ej: Plataforma empresarial"
+          [(ngModel)]="nuevaCotizacion.proyecto"
+        >
+      </label>
+
+      <div class="form-row">
+        <label>
+          Items
+          <input type="number" min="1" name="items" [(ngModel)]="nuevaCotizacion.items">
+        </label>
+
+        <label>
+          Total USD
+          <input type="number" min="0" name="totalUsd" [(ngModel)]="nuevaCotizacion.totalUsd">
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label>
+          Responsable
+          <input
+            type="text"
+            name="responsable"
+            placeholder="Ej: Equipo Comercial"
+            [(ngModel)]="nuevaCotizacion.responsable"
+          >
+        </label>
+
+        <label>
+          Prioridad
+          <select name="prioridad" [(ngModel)]="nuevaCotizacion.prioridad">
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Vigencia
+        <input type="date" name="vigencia" [(ngModel)]="nuevaCotizacion.vigencia">
+      </label>
+
+      <label>
+        Descripción del proyecto
+        <textarea
+          name="descripcion"
+          rows="4"
+          placeholder="Alcance, requerimientos, módulos o notas importantes"
+          [(ngModel)]="nuevaCotizacion.descripcion"
+        ></textarea>
+      </label>
+
+    </form>
+
+    <section class="quotation-preview">
+      <span class="preview-kicker">Previsualización</span>
+
+      <div class="preview-header">
+        <div>
+          <h3>{{ nuevaCotizacion.proyecto || 'Nombre del proyecto' }}</h3>
+          <p>{{ nuevaCotizacion.cliente || 'Cliente pendiente' }}</p>
+        </div>
+
+        <span class="badge draft">{{ nuevaCotizacion.estado }}</span>
+      </div>
+
+      <div class="preview-grid">
+        <div>
+          <small>Fecha</small>
+          <strong>{{ nuevaCotizacion.fecha || '-' }}</strong>
+        </div>
+
+        <div>
+          <small>Items</small>
+          <strong>{{ nuevaCotizacion.items || 0 }}</strong>
+        </div>
+
+        <div>
+          <small>Total USD</small>
+          <strong>{{ nuevaCotizacion.totalUsd | currency:'USD' }}</strong>
+        </div>
+
+        <div>
+          <small>Prioridad</small>
+          <strong>{{ nuevaCotizacion.prioridad }}</strong>
+        </div>
+
+        <div>
+          <small>Responsable</small>
+          <strong>{{ nuevaCotizacion.responsable || '-' }}</strong>
+        </div>
+
+        <div>
+          <small>Vigencia</small>
+          <strong>{{ nuevaCotizacion.vigencia || '-' }}</strong>
+        </div>
+      </div>
+
+      <div class="preview-notes">
+        <small>Descripción</small>
+        <p>{{ nuevaCotizacion.descripcion || 'Agrega detalles del alcance del proyecto.' }}</p>
+      </div>
+
+      <button
+        class="save-quotation-btn"
+        type="button"
+        (click)="guardarNuevaCotizacion()"
+      >
+        Guardar cotización
+      </button>
+    </section>
+
+  </div>
+</app-modal>
