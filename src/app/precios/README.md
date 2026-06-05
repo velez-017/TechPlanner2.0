@@ -6,14 +6,14 @@ Esta carpeta frontend está **100% alineada** con el Microservicio Pricing Servi
 
 ### Correspondencia Exacta
 
-| Backend (Java/Spring) | Frontend (Angular) | Descripción |
-|-------|--------|---|
-| `amount` | `amount` | Precio base del producto |
-| `productName` | `productName` | Nombre del producto |
-| `DEFAULT` | `DEFAULT` | Cliente Regular (5% descuento) |
-| `EXECUTIVE` | `EXECUTIVE` | Ejecutivo (15% descuento) |
-| `ADMINISTRATIVE` | `ADMINISTRATIVE` | Administrativo (10% descuento) |
-| `19%` | `19%` | IVA fijo |
+| Backend (Java/Spring)                | Frontend (Angular) | Descripción |
+|--------------------------------------|--------|---|
+| `amount`                             | `amount` | Precio base del producto |
+| `productName`                        | `productName` | Nombre del producto |
+| `REGULAR`                            | `REGULAR` | Cliente Regular (5% descuento) |
+| `EXECUTIVE`                          | `EXECUTIVE` | Ejecutivo (15% descuento) |
+| `ADMINISTRATIVE`                     | `ADMINISTRATIVE` | Administrativo (10% descuento) |
+| `19%`                                | `19%` | IVA fijo |
 | `@PrePersist` → `calculatePricing()` | `completeProductData()` | Cálculos automáticos |
 
 ---
@@ -82,7 +82,7 @@ private void calculatePricing() {
   // Valida tipos de cliente:
   // EXECUTIVE → 15%
   // ADMINISTRATIVE → 10%
-  // DEFAULT → 5%
+  // REGULAR → 5%
   
   discountPercentage = 15;
   taxPercentage = 19;
@@ -143,7 +143,7 @@ export class PrecioProducto {
   id?: number;                    // Auto-generado por BD
   productName: string = '';       // Nombre del producto
   amount!: number;                // Precio base (NO basePrice)
-  customerType: string = 'DEFAULT'; // Tipo cliente
+  customerType: string = 'REGULAR'; // Tipo cliente
   discountPercentage!: number;    // Calculado por backend
   taxPercentage: number = 19;     // Siempre 19%
   finalPrice!: number;            // Calculado por backend
@@ -155,7 +155,7 @@ export class PrecioProducto {
 ```typescript
 // Descuentos alineados con backend
 DISCOUNTS = {
-  'DEFAULT': 5,        // ← Backend: DEFAULT
+  'REGULAR': 5,        // ← Backend: REGULAR
   'EXECUTIVE': 15,     // ← Backend: EXECUTIVE
   'ADMINISTRATIVE': 10 // ← Backend: ADMINISTRATIVE
 };
@@ -180,7 +180,7 @@ completeProductData()
 ```typescript
 // Tipos de cliente con etiquetas y descuentos
 CUSTOMER_TYPES = [
-  { code: 'DEFAULT', label: 'Cliente Regular', discount: 5 },
+  { code: 'REGULAR', label: 'Cliente Regular', discount: 5 },
   { code: 'EXECUTIVE', label: 'Ejecutivo', discount: 15 },
   { code: 'ADMINISTRATIVE', label: 'Administrativo', discount: 10 },
 ];
@@ -199,7 +199,7 @@ getCustomerTypeLabel(code) → Convierte "EXECUTIVE" → "Ejecutivo (15%)"
 
 ### `precios.component.html` - UI
 - **Panel de Detalle**: Muestra producto seleccionado
-- **Selector de Tipo Customer**: Cambia entre DEFAULT/EXECUTIVE/ADMINISTRATIVE
+- **Selector de Tipo Customer**: Cambia entre REGULAR/EXECUTIVE/ADMINISTRATIVE
 - **Preview de Cálculos**: Muestra descuento, IVA y precio final
 - **Lista de Productos**: Cards clicables con resumen
 - **Botones**: Editar, Eliminar, Crear Nuevo
@@ -211,7 +211,7 @@ getCustomerTypeLabel(code) → Convierte "EXECUTIVE" → "Ejecutivo (15%)"
 ### Backend (Java Enum)
 ```java
 public enum CustomerType {
-  DEFAULT,
+  REGULAR,
   EXECUTIVE,
   ADMINISTRATIVE
 }
@@ -220,7 +220,7 @@ public enum CustomerType {
 ### Frontend (TypeScript)
 ```typescript
 const CUSTOMER_TYPES = [
-  { code: 'DEFAULT', label: 'Cliente Regular', discount: 5 },
+  { code: 'REGULAR', label: 'Cliente Regular', discount: 5 },
   { code: 'EXECUTIVE', label: 'Ejecutivo', discount: 15 },
   { code: 'ADMINISTRATIVE', label: 'Administrativo', discount: 10 },
 ];
@@ -229,7 +229,7 @@ const CUSTOMER_TYPES = [
 ### En Desplegable
 ```html
 <select>
-  <option value="DEFAULT">Cliente Regular (5% descuento)</option>
+  <option value="REGULAR">Cliente Regular (5% descuento)</option>
   <option value="EXECUTIVE">Ejecutivo (15% descuento)</option>
   <option value="ADMINISTRATIVE">Administrativo (10% descuento)</option>
 </select>
@@ -241,7 +241,7 @@ const CUSTOMER_TYPES = [
 
 | Tipo Cliente | Backend | Frontend | URL API |
 |---|---|---|---|
-| DEFAULT | 5% | 5% | /api/v1/pricing-service/prices |
+| REGULAR | 5% | 5% | /api/v1/pricing-service/prices |
 | EXECUTIVE | 15% | 15% | /api/v1/pricing-service/prices |
 | ADMINISTRATIVE | 10% | 10% | /api/v1/pricing-service/prices |
 | IVA (Todos) | 19% | 19% | /api/v1/pricing-service/prices |
@@ -373,7 +373,7 @@ Base URL: `http://localhost:8081/api/v1/pricing-service/prices`
 ## ✅ Checklist de Alineación
 
 - ✅ Campo `amount` (no `basePrice`)
-- ✅ Tipos: `DEFAULT`, `EXECUTIVE`, `ADMINISTRATIVE`
+- ✅ Tipos: `REGULAR`, `EXECUTIVE`, `ADMINISTRATIVE`
 - ✅ Descuentos: 5%, 15%, 10%
 - ✅ IVA: 19% (siempre)
 - ✅ Cálculos alineados (preview local = backend)

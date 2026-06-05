@@ -37,7 +37,7 @@
             <div class="mb-3">
               <label for="customerTypeSelect" class="form-label fw-bold">Tipo de cliente:</label>
               <select id="customerTypeSelect" class="form-select" [value]="selectedProduct.customerType" (change)="selectCustomerType($event)">
-                <option value="DEFAULT">Cliente Regular (5% descuento)</option>
+                <option value="REGULAR">Cliente Regular (5% descuento)</option>
                 <option value="EXECUTIVE">Ejecutivo (15% descuento)</option>
                 <option value="ADMINISTRATIVE">Administrativo (10% descuento)</option>
               </select>

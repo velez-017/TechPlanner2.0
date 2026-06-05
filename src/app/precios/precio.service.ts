@@ -24,7 +24,7 @@ export class ProductoService {
   // ── Configuración de descuentos por tipo de cliente (Backend) ──────────────
   // Alineado con: Backend Pricing Service calculatePricing()
   private readonly DISCOUNTS: Record<string, number> = {
-    'DEFAULT': 5,              // Tipo cliente por defecto: 5%
+    'REGULAR': 5,              // Tipo cliente por defecto: 5%
     'EXECUTIVE': 15,           // Ejecutivo: 15%
     'ADMINISTRATIVE': 10,      // Administrativo: 10%
   };
@@ -48,7 +48,7 @@ export class ProductoService {
     const completed = { ...product };
 
     // Obtener descuento según tipo de cliente (del backend)
-    const discountRate = this.DISCOUNTS[completed.customerType] || this.DISCOUNTS['DEFAULT'];
+    const discountRate = this.DISCOUNTS[completed.customerType] || this.DISCOUNTS['REGULAR'];
     completed.discountPercentage = discountRate;
 
     // Calcular precio después de descuento
