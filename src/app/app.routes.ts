@@ -8,7 +8,7 @@ import { PreciosComponent } from './precios/precios.component';
 import { Dashboard } from './paginas/dashboard/dashboard';
 import { Clientes } from './paginas/clientes/clientes';
 import { Analytics } from './paginas/analytics/analytics';
-import { SistemasOperativosComponent } from './paginas/sistemas-operativos/sistemas-operativos.component';
+import { SistemasOperativosComponent } from './sistemas-operativos/sistemas-operativos.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },

@@ -8,13 +8,12 @@ describe('SistemasOperativosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SistemasOperativosComponent]
-    })
-    .compileComponents();
+      imports: [SistemasOperativosComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SistemasOperativosComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
